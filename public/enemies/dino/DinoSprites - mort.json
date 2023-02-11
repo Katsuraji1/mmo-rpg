@@ -1,0 +1,524 @@
+{
+	"textures": [
+		{
+			"image": "DinoSprites - mort.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 21,
+				"h": 415
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "DinoSprites - mort-17.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 6,
+						"w": 19,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 19,
+						"h": 16
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-19.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 6,
+						"w": 19,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 19,
+						"w": 19,
+						"h": 16
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-20.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 5,
+						"w": 19,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 19,
+						"h": 16
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-22.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 6,
+						"w": 19,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 55,
+						"w": 19,
+						"h": 16
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-23.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 5,
+						"w": 19,
+						"h": 16
+					},
+					"frame": {
+						"x": 1,
+						"y": 73,
+						"w": 19,
+						"h": 16
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-18.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 5,
+						"w": 19,
+						"h": 15
+					},
+					"frame": {
+						"x": 1,
+						"y": 91,
+						"w": 19,
+						"h": 15
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 5,
+						"w": 19,
+						"h": 15
+					},
+					"frame": {
+						"x": 1,
+						"y": 108,
+						"w": 19,
+						"h": 15
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 2,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 1,
+						"y": 125,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-14.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 2,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 1,
+						"y": 147,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 169,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 169,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 169,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 169,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 190,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 211,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 232,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 253,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-15.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 274,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-16.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 3,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 295,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 4,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 316,
+						"w": 17,
+						"h": 18
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 336,
+						"w": 17,
+						"h": 18
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 4,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 356,
+						"w": 17,
+						"h": 18
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 376,
+						"w": 17,
+						"h": 18
+					}
+				},
+				{
+					"filename": "DinoSprites - mort-8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 24,
+						"h": 24
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 4,
+						"w": 17,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 396,
+						"w": 17,
+						"h": 18
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:b6eba12d1a48ffb808b267d52e2ac527:ee036a6959c9fbdccc3d11041327d648:a6474d4f4fa9046774b45ba1b5b46f82$"
+	}
+}
