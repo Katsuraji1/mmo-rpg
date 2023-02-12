@@ -4,7 +4,10 @@ import { dinoAnims } from '../anims/enemiesAnims';
 import { FaunaAnimation } from '../anims/characterAnims';
 import { Text } from '../utils/text';
 
+import '../character/fauna/fauna'
+
 import Dino from '../enemies/dino';
+import Fauna from '../character/fauna/fauna';
 
 let keyA: Phaser.Input.Keyboard.Key;
 let keyS: Phaser.Input.Keyboard.Key;
@@ -12,7 +15,7 @@ let keyD: Phaser.Input.Keyboard.Key;
 let keyW: Phaser.Input.Keyboard.Key;
 export default class Game extends Phaser.Scene {
 
-	private fauna!: Phaser.Physics.Arcade.Sprite;
+	private fauna!: Fauna;
 	private name!: Text;
 
 	constructor() {
@@ -37,11 +40,11 @@ export default class Game extends Phaser.Scene {
 		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet]);
 		wallsLayer.setCollisionByProperty({collides: true})
 
-		this.fauna = this.physics.add.sprite(300, 300, 'fauna', 'walk-down-3.png');
-		this.name = new Text(this, this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height, 'Katsuraji');
-		//debug(wallsLayer, this)
+		this.fauna = this.add.fauna(300, 300, 'fauna');
 
-		this.fauna.body.setSize(this.fauna.width * 0.5, this.fauna.height * 0.8);
+		this.name = new Text(this, this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height, 'Katsuraji');
+
+		//debug(wallsLayer, this)
 		this.cameras.main.startFollow(this.fauna, true);
 
 		const Dinos = this.physics.add.group( {
@@ -55,45 +58,27 @@ export default class Game extends Phaser.Scene {
 		Dinos.get(359, 359, 'dino')
 		this.physics.add.collider(this.fauna, wallsLayer);
 		this.physics.add.collider(Dinos, wallsLayer);
+
+		this.physics.add.collider(Dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
+
+}
+
+private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
+	const dino = _obj2 as Dino
+
+	const dx = this.fauna.x - dino.x;
+	const dy = this.fauna.y - dino.y;
+
+	const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
+	this.fauna.damageHandler(dir);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 update(_time: number, _delta: number): void {
+
 	this.name.setPosition(this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height);
-	const speed = 75;
-	if( keyW.isDown && keyA.isDown ) {
-		this.fauna.anims.play('fauna-run-up', true);
-		this.fauna.setVelocity(-(speed / 2) * Math.sqrt(2), -(speed / 2) * Math.sqrt(2))
-	} else if( keyW.isDown && keyD.isDown ) {
-		this.fauna.anims.play('fauna-run-up', true);
-		this.fauna.setVelocity((speed / 2) * Math.sqrt(2), -(speed / 2) * Math.sqrt(2))
-	} else if( keyA.isDown && keyS.isDown ) {
-		this.fauna.anims.play('fauna-run-down', true);
-		this.fauna.setVelocity(-(speed / 2) * Math.sqrt(2), (speed / 2) * Math.sqrt(2))
-	} else if( keyD.isDown && keyS.isDown ) {
-		this.fauna.anims.play('fauna-run-down', true);
-		this.fauna.setVelocity((speed / 2) * Math.sqrt(2), (speed / 2) * Math.sqrt(2))
-	} else if(keyA.isDown) {
-		this.fauna.anims.play('fauna-run-side', true);
-		this.fauna.setVelocity(-speed, 0)
-		this.fauna.scaleX = -1;
-		this.fauna.body.offset.x = 24;
-	} else if(keyS.isDown) {
-		this.fauna.anims.play('fauna-run-down', true);
-		this.fauna.setVelocity(0, speed)
-	} else if(keyD.isDown) {
-		this.fauna.anims.play('fauna-run-side', true);
-		this.fauna.setVelocity(speed, 0)
-		this.fauna.scaleX = 1;
-		this.fauna.body.offset.x = 8;
-	} else if(keyW.isDown) {
-		this.fauna.anims.play('fauna-run-up', true);
-		this.fauna.setVelocity(0, -speed)
-		this.fauna.anims.play('fauna-run-up', true);
-	}
-	else {
-		this.fauna.setVelocity(0, 0);
-		this.fauna.anims.play('fauna-idle-down', true);
+	if(this.fauna) {
+		this.fauna.update(keyA, keyD, keyS, keyW);
 	}
 }
 }

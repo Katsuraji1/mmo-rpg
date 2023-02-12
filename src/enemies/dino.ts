@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { Text } from '../utils/text';
 
-enum Direction {
+export enum Direction {
     UP,
     DOWN,
     LEFT,
