@@ -18,6 +18,11 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
     private healthState = HealthState.IDLE;
     private damageTime = 0;
+    private _health = 100;
+
+    get health() {
+        return this._health;
+    }
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super (scene, x, y, texture, frame)
@@ -28,6 +33,10 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     }
 
     damageHandler(dir: Phaser.Math.Vector2) {
+        if (this._health <= 0) {
+            return
+        }
+
         if (this.healthState === HealthState.DAMAGE) {
             return
         }
@@ -39,6 +48,12 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff0000)
 
         this.damageTime = 0;
+
+        this._health -= 10;
+
+        if(this._health <= 0) {
+            //die
+        }
     }
 
     protected preUpdate(_time: number, _delta: number): void {

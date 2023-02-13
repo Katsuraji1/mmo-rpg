@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import { dinoAnims } from '../anims/enemiesAnims';
 import { FaunaAnimation } from '../anims/characterAnims';
 import { Text } from '../utils/text';
+import { newEvent as events } from '../events/eventCenter';
 
 import '../character/fauna/fauna'
 
@@ -30,14 +31,16 @@ export default class Game extends Phaser.Scene {
 	}
 
 	create() {
+		this.scene.launch('ui-scene');
 		FaunaAnimation(this.anims);
 		dinoAnims(this.anims);
 		const map = this.make.tilemap({ key: 'map' });
 		const tileSet = map.addTilesetImage('Tiles', 'tiles', 16, 16);
 		const MasterSimpleTileSet = map.addTilesetImage('MasterSimple', 'MasterSimple');
+		const townTileSet = map.addTilesetImage('town', 'town')
 
-		map.createLayer('ground', [tileSet]);
-		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet]);
+		map.createLayer('ground', [tileSet, townTileSet, MasterSimpleTileSet]);
+		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet, townTileSet]);
 		wallsLayer.setCollisionByProperty({collides: true})
 
 		this.fauna = this.add.fauna(300, 300, 'fauna');
@@ -71,7 +74,10 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 
 	const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
 	this.fauna.damageHandler(dir);
+
+	events.emit('player-health-changed', this.fauna.health)
 }
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 update(_time: number, _delta: number): void {
