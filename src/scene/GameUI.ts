@@ -12,6 +12,8 @@ export default class GameUI extends Phaser.Scene {
         this.graphics = this.add.graphics();
         this.setHealthBar(100);
 
+        this.add.image(495,60,'borderMap')
+
         events.on('player-health-changed',this.handleHealthPlayerChanged ,this)
 
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {

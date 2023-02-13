@@ -19,6 +19,7 @@ export default class Game extends Phaser.Scene {
 	private fauna!: Fauna;
 	private name!: Text;
 	private dinos?: Phaser.GameObjects.Group;
+	private minimap!: Phaser.Cameras.Scene2D.Camera;
 
 	constructor() {
 		super('game')
@@ -53,6 +54,11 @@ export default class Game extends Phaser.Scene {
 		const MasterSimpleTileSet = map.addTilesetImage('MasterSimple', 'MasterSimple');
 		const townTileSet = map.addTilesetImage('town', 'town')
 
+		this.minimap = this.cameras.add(450, 10, 100, 100).setZoom(0.12).setName('mini');
+        this.minimap.setBackgroundColor(0x002244);
+        this.minimap.scrollX = 300;
+        this.minimap.scrollY = 150;
+
 		map.createLayer('ground', [tileSet, townTileSet, MasterSimpleTileSet]);
 		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet, townTileSet]);
 		wallsLayer.setCollisionByProperty({collides: true})
@@ -71,7 +77,6 @@ export default class Game extends Phaser.Scene {
 				DinosGameObject.body.onCollide = true;
 			}
 		} )
-
 
 		this.dinos.get(359, 359, 'dino')
 		this.physics.add.collider(this.fauna, wallsLayer);
@@ -101,7 +106,8 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 update(_time: number, _delta: number): void {
-
+	this.minimap.scrollX = Phaser.Math.Clamp(this.fauna.x, 0, 1500);
+	this.minimap.scrollY = Phaser.Math.Clamp(this.fauna.y, 0, 1500);
 /* 	this.enemyFollows(); */
 	this.name.setPosition(this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height);
 	if(this.fauna) {

@@ -78,7 +78,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         if(this.healthState === HealthState.DAMAGE) {
             return
         }
-        const speed = 75;
+        const speed = 300;
 	if( keyW.isDown && keyA.isDown ) {
 		this.anims.play('fauna-run-up', true);
 		this.setVelocity(-(speed / 2) * Math.sqrt(2), -(speed / 2) * Math.sqrt(2))
