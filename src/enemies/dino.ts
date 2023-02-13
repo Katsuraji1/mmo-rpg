@@ -28,6 +28,8 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
     private direction = Direction.RIGTH;
     private move:  Phaser.Time.TimerEvent;
     private DinoName!: Text;
+    private target!: Phaser.GameObjects.Components.Transform;
+    private RANGE!: number;
 
     constructor(scene: Phaser.Scene, x: number ,y: number , texture: string, frame: string | number ) {
         super (scene, x, y, texture, frame)
@@ -40,10 +42,14 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
         this.move = scene.time.addEvent( {
             delay: 2500,
             callback: () => {
-                this.direction = getRandomDirection(this.direction);
+                    this.direction = getRandomDirection(this.direction);
             },
             loop: true
         } )
+    }
+
+    setTarget(target: Phaser.GameObjects.Components.Transform) {
+        this.target = target;
     }
 
     destroy(fromScene?: boolean | undefined): void {
@@ -62,6 +68,8 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time: number, delta: number): void {
         super.preUpdate(time, delta);
+
+        this.setTarget;
 
         this.DinoName.setPosition(this.x - this.width, this.y - this.height);
 
@@ -114,6 +122,17 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
             break
         }
 
-    }
+        if (!this.target) {
+            return
+        } 
 
+
+        this.RANGE = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)
+
+        if(this.RANGE <= 100) {
+            this.scene.physics.moveToObject(this, this.target);
+        } else {
+            return
+        }
+    }
 }

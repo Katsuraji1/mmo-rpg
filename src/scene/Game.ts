@@ -18,6 +18,7 @@ export default class Game extends Phaser.Scene {
 
 	private fauna!: Fauna;
 	private name!: Text;
+	private dinos?: Phaser.GameObjects.Group;
 
 	constructor() {
 		super('game')
@@ -29,6 +30,19 @@ export default class Game extends Phaser.Scene {
 		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 		keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 	}
+/* 
+	enemyFollows() {
+		this.dinos?.children.each(child => {
+			const dino = child as Dino;
+			this.RANGE = Phaser.Math.Distance.Between(dino.x, dino.y, this.fauna.x, this.fauna.y);
+			if(this.RANGE <= 200) {
+				this.physics.moveToObject(dino, this.fauna);
+				console.log(this.RANGE);
+			} else {
+				return
+			}
+		})
+	} */
 
 	create() {
 		this.scene.launch('ui-scene');
@@ -50,7 +64,7 @@ export default class Game extends Phaser.Scene {
 		//debug(wallsLayer, this)
 		this.cameras.main.startFollow(this.fauna, true);
 
-		const Dinos = this.physics.add.group( {
+		this.dinos = this.physics.add.group( {
 			classType: Dino,
 			createCallback: (gameObject) => {
 				const DinosGameObject = gameObject as Dino
@@ -58,11 +72,17 @@ export default class Game extends Phaser.Scene {
 			}
 		} )
 
-		Dinos.get(359, 359, 'dino')
-		this.physics.add.collider(this.fauna, wallsLayer);
-		this.physics.add.collider(Dinos, wallsLayer);
 
-		this.physics.add.collider(Dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
+		this.dinos.get(359, 359, 'dino')
+		this.physics.add.collider(this.fauna, wallsLayer);
+		this.physics.add.collider(this.dinos, wallsLayer);
+
+		this.physics.add.collider(this.dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
+
+		this.dinos.children.each((child => {
+			const dino = child as Dino
+			dino.setTarget(this.fauna);
+		}))
 
 }
 
@@ -82,6 +102,7 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 update(_time: number, _delta: number): void {
 
+/* 	this.enemyFollows(); */
 	this.name.setPosition(this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height);
 	if(this.fauna) {
 		this.fauna.update(keyA, keyD, keyS, keyW);
