@@ -15,13 +15,15 @@ let keyA: Phaser.Input.Keyboard.Key;
 let keyS: Phaser.Input.Keyboard.Key;
 let keyD: Phaser.Input.Keyboard.Key;
 let keyW: Phaser.Input.Keyboard.Key;
+let keySpace: Phaser.Input.Keyboard.Key;
 export default class Game extends Phaser.Scene {
 
 	private fauna!: Fauna;
 	private name!: Text;
-	private dinos?: Phaser.GameObjects.Group;
+	private dinos!: Phaser.GameObjects.Group;
 	private minimap!: Phaser.Cameras.Scene2D.Camera;
 	private CollidesBetweenPlayerAndMob?: Phaser.Physics.Arcade.Collider;
+	private fireballs!: Phaser.Physics.Arcade.Group;
 
 	constructor() {
 		super('game')
@@ -32,6 +34,7 @@ export default class Game extends Phaser.Scene {
 		keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 		keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 		keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+		keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 	}
 /* 
 	enemyFollows() {
@@ -62,11 +65,17 @@ export default class Game extends Phaser.Scene {
         this.minimap.scrollX = 300;
         this.minimap.scrollY = 150;
 
-		map.createLayer('ground', [tileSet, townTileSet]);
+		map.createLayer('ground', [tileSet, townTileSet, MasterSimpleTileSet]);
 		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet, townTileSet, treesTileSet]);
 		wallsLayer.setCollisionByProperty({collides: true})
 
+
+		this.fireballs = this.physics.add.group( {
+			classType: Phaser.Physics.Arcade.Image
+		} )
+
 		this.fauna = this.add.fauna(300, 300, 'fauna');
+		this.fauna.setFireballs(this.fireballs);
 
 		this.name = new Text(this, this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height, 'Katsuraji');
 
@@ -84,6 +93,9 @@ export default class Game extends Phaser.Scene {
 		this.dinos.get(359, 359, 'dino')
 		this.physics.add.collider(this.fauna, wallsLayer);
 		this.physics.add.collider(this.dinos, wallsLayer);
+		this.physics.add.collider(this.fireballs, wallsLayer, this.FireballWallsCollisionHandler, undefined,this);
+
+		this.physics.add.collider(this.fireballs, this.dinos, this.MobFireballCollisionHandler, undefined, this);
 
 		this.CollidesBetweenPlayerAndMob = this.physics.add.collider(this.dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
 
@@ -93,6 +105,17 @@ export default class Game extends Phaser.Scene {
 		}))
 
 }
+
+private MobFireballCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
+	this.fireballs.killAndHide(_obj1);
+	this.dinos.killAndHide(_obj2);
+}
+
+private FireballWallsCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
+	this.fireballs.killAndHide(_obj1);
+}
+
+
 
 private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	const dino = _obj2 as Dino
@@ -106,7 +129,7 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 	events.emit('player-health-changed', this.fauna.health)
 
 	if(this.fauna.health <= 0) {
-		this.CollidesBetweenPlayerAndMob?.destroy
+		this.CollidesBetweenPlayerAndMob?.destroy()
 	}
 }
 
@@ -118,7 +141,7 @@ update(_time: number, _delta: number): void {
 /* 	this.enemyFollows(); */
 	this.name.setPosition(this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height);
 	if(this.fauna) {
-		this.fauna.update(keyA, keyD, keyS, keyW);
+		this.fauna.update(keyA, keyD, keyS, keyW, keySpace);
 	}
 }
 }
