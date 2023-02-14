@@ -11,7 +11,8 @@ declare global {
 
 enum HealthState {
     IDLE,
-    DAMAGE
+    DAMAGE,
+    DEAD
 }
 
 export default class Fauna extends Phaser.Physics.Arcade.Sprite {
@@ -41,18 +42,19 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
             return
         }
 
-        this.setVelocity(dir.x, dir.y);
-
-        this.healthState = HealthState.DAMAGE;
-
-        this.setTint(0xff0000)
-
-        this.damageTime = 0;
-
         this._health -= 10;
 
         if(this._health <= 0) {
-            //die
+            this.healthState = HealthState.DEAD;
+            this.anims.play('fauna-die', true);
+            this.setVelocity(0, 0)
+        } else {
+            this.setVelocity(dir.x, dir.y);
+            
+            this.setTint(0xff0000)
+            this.healthState = HealthState.DAMAGE;
+
+            this.damageTime = 0;
         }
     }
 
@@ -75,7 +77,7 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(keyA: Phaser.Input.Keyboard.Key, keyD: Phaser.Input.Keyboard.Key, keyS: Phaser.Input.Keyboard.Key, keyW: Phaser.Input.Keyboard.Key) {
-        if(this.healthState === HealthState.DAMAGE) {
+        if(this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) {
             return
         }
         const speed = 300;

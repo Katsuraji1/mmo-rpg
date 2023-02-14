@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { Text } from '../utils/text';
+import Fauna from '../character/fauna/fauna';
 
 export enum Direction {
     UP,
@@ -30,6 +31,7 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
     private DinoName!: Text;
     private target!: Phaser.GameObjects.Components.Transform;
     private RANGE!: number;
+    private Player!: Fauna;
 
     constructor(scene: Phaser.Scene, x: number ,y: number , texture: string, frame: string | number ) {
         super (scene, x, y, texture, frame)
@@ -128,9 +130,13 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
 
 
         this.RANGE = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)
-
-        if(this.RANGE <= 100) {
-            this.scene.physics.moveToObject(this, this.target);
+        this.Player = this.target as Fauna
+        if (this.Player.health > 0) {
+            if(this.RANGE <= 100) {
+                this.scene.physics.moveToObject(this, this.target);
+            } else {
+                return
+            }
         } else {
             return
         }

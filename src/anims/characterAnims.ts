@@ -16,22 +16,28 @@ const FaunaAnimation = (anims: Phaser.Animations.AnimationManager) => {
 
     anims.create( {
         key: 'fauna-run-down',
-        frames: anims.generateFrameNames('fauna', { start: 0, end: 8, prefix: 'run-down-', suffix: '.png' }),
+        frames: anims.generateFrameNames('fauna', { start: 1, end: 8, prefix: 'run-down-', suffix: '.png' }),
         repeat: -1,
         frameRate: 15,
     } )
 
     anims.create( {
         key: 'fauna-run-side',
-        frames: anims.generateFrameNames('fauna', {start: 0, end: 8, prefix: 'run-side-', suffix: '.png'}),
+        frames: anims.generateFrameNames('fauna', {start: 1, end: 8, prefix: 'run-side-', suffix: '.png'}),
         repeat: -1,
         frameRate: 15,
     })
 
     anims.create( {
         key: 'fauna-run-up',
-        frames: anims.generateFrameNames('fauna', {start: 0, end: 8, prefix: 'run-up-', suffix: '.png'}),
+        frames: anims.generateFrameNames('fauna', {start: 1, end: 8, prefix: 'run-up-', suffix: '.png'}),
         repeat: -1,
+        frameRate: 15,
+    })
+
+    anims.create( {
+        key: 'fauna-die',
+        frames: anims.generateFrameNames('fauna', {start: 1, end: 4, prefix: 'faint-', suffix: '.png'}),
         frameRate: 15,
     })
 }

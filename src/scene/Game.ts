@@ -9,6 +9,7 @@ import '../character/fauna/fauna'
 
 import Dino from '../enemies/dino';
 import Fauna from '../character/fauna/fauna';
+//import { debug } from '../utils/debug';
 
 let keyA: Phaser.Input.Keyboard.Key;
 let keyS: Phaser.Input.Keyboard.Key;
@@ -20,6 +21,7 @@ export default class Game extends Phaser.Scene {
 	private name!: Text;
 	private dinos?: Phaser.GameObjects.Group;
 	private minimap!: Phaser.Cameras.Scene2D.Camera;
+	private CollidesBetweenPlayerAndMob?: Phaser.Physics.Arcade.Collider;
 
 	constructor() {
 		super('game')
@@ -53,14 +55,15 @@ export default class Game extends Phaser.Scene {
 		const tileSet = map.addTilesetImage('Tiles', 'tiles', 16, 16);
 		const MasterSimpleTileSet = map.addTilesetImage('MasterSimple', 'MasterSimple');
 		const townTileSet = map.addTilesetImage('town', 'town')
+		const treesTileSet = map.addTilesetImage('Trees','trees')
 
 		this.minimap = this.cameras.add(450, 10, 100, 100).setZoom(0.12).setName('mini');
         this.minimap.setBackgroundColor(0x002244);
         this.minimap.scrollX = 300;
         this.minimap.scrollY = 150;
 
-		map.createLayer('ground', [tileSet, townTileSet, MasterSimpleTileSet]);
-		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet, townTileSet]);
+		map.createLayer('ground', [tileSet, townTileSet]);
+		const wallsLayer = map.createLayer('walls', [tileSet, MasterSimpleTileSet, townTileSet, treesTileSet]);
 		wallsLayer.setCollisionByProperty({collides: true})
 
 		this.fauna = this.add.fauna(300, 300, 'fauna');
@@ -82,7 +85,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.fauna, wallsLayer);
 		this.physics.add.collider(this.dinos, wallsLayer);
 
-		this.physics.add.collider(this.dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
+		this.CollidesBetweenPlayerAndMob = this.physics.add.collider(this.dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
 
 		this.dinos.children.each((child => {
 			const dino = child as Dino
@@ -101,6 +104,10 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 	this.fauna.damageHandler(dir);
 
 	events.emit('player-health-changed', this.fauna.health)
+
+	if(this.fauna.health <= 0) {
+		this.CollidesBetweenPlayerAndMob?.destroy
+	}
 }
 
 
