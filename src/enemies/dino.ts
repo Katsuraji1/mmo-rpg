@@ -54,7 +54,7 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
         this.target = target;
     }
 
-    destroy(fromScene?: boolean | undefined): void {
+    destroy(fromScene?: boolean): void {
         this.move.destroy();
 
         super.destroy(fromScene);

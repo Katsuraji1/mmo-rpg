@@ -109,10 +109,12 @@ export default class Game extends Phaser.Scene {
 private MobFireballCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	this.fireballs.killAndHide(_obj1);
 	this.dinos.killAndHide(_obj2);
+	_obj2.destroy();
 }
 
 private FireballWallsCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	this.fireballs.killAndHide(_obj1);
+	_obj1.destroy()
 }
 
 

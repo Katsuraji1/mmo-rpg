@@ -21,7 +21,6 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     private damageTime = 0;
     private _health = 100;
     private fireballs?: Phaser.Physics.Arcade.Group 
-    private size = 0;
 
     get health() {
         return this._health;
@@ -68,11 +67,6 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         if(!this.fireballs) {
             return
         }
-
-        this.size += 1;
-        if(this.size > 1) {
-            return
-        }
         const parts = this.anims.currentAnim.key.split('-');
         const direction = parts[2];
 
@@ -103,10 +97,6 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
         fireball.setActive(true);
         fireball.setVisible(true);
-        
-        setTimeout(() => {
-            this.size = 0
-        }, 1000)
     }
 
     protected preUpdate(_time: number, _delta: number): void {
