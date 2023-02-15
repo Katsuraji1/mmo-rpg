@@ -32,6 +32,7 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
     private target!: Phaser.GameObjects.Components.Transform;
     private RANGE!: number;
     private Player!: Fauna;
+    private _health = 100;
 
     constructor(scene: Phaser.Scene, x: number ,y: number , texture: string, frame: string | number ) {
         super (scene, x, y, texture, frame)
@@ -48,6 +49,14 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
             },
             loop: true
         } )
+    }
+
+    getHealth() {
+        return this._health;
+    }
+
+    setHealth(health: number) {
+        this._health = health;
     }
 
     setTarget(target: Phaser.GameObjects.Components.Transform) {

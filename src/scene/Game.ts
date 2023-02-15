@@ -24,6 +24,7 @@ export default class Game extends Phaser.Scene {
 	private minimap!: Phaser.Cameras.Scene2D.Camera;
 	private CollidesBetweenPlayerAndMob?: Phaser.Physics.Arcade.Collider;
 	private fireballs!: Phaser.Physics.Arcade.Group;
+	private mobHealth!: number;
 
 	constructor() {
 		super('game')
@@ -108,13 +109,20 @@ export default class Game extends Phaser.Scene {
 
 private MobFireballCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	this.fireballs.killAndHide(_obj1);
-	this.dinos.killAndHide(_obj2);
-	_obj2.destroy();
+	_obj1.destroy();
+	const dino = _obj2 as Dino;
+	this.mobHealth = dino.getHealth();
+	this.mobHealth -= 50;
+	dino.setHealth(this.mobHealth);
+	if(this.mobHealth <= 0) {
+		this.dinos.killAndHide(_obj2);
+		_obj2.destroy();
+	}
 }
 
 private FireballWallsCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	this.fireballs.killAndHide(_obj1);
-	_obj1.destroy()
+	_obj1.destroy();
 }
 
 
