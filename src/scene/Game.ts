@@ -114,12 +114,14 @@ private MobFireballCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _ob
 	this.mobHealth = dino.getHealth();
 	this.mobHealth -= 50;
 	dino.setHealth(this.mobHealth);
+	events.emit('dino-health-changed', this.mobHealth)
 	if(this.mobHealth <= 0) {
 		this.dinos.killAndHide(_obj2);
 		_obj2.destroy();
 	}
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 private FireballWallsCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _obj2: Phaser.GameObjects.GameObject) => {
 	this.fireballs.killAndHide(_obj1);
 	_obj1.destroy();

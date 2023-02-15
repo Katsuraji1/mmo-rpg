@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { Text } from '../utils/text';
 import Fauna from '../character/fauna/fauna';
+import { newEvent as events } from "../events/eventCenter";
 
 export enum Direction {
     UP,
@@ -33,6 +34,7 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
     private RANGE!: number;
     private Player!: Fauna;
     private _health = 100;
+    private graphics!: Phaser.GameObjects.Graphics;
 
     constructor(scene: Phaser.Scene, x: number ,y: number , texture: string, frame: string | number ) {
         super (scene, x, y, texture, frame)
@@ -49,6 +51,15 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
             },
             loop: true
         } )
+
+        this.graphics = scene.add.graphics();
+        this.setHealthBar(100);
+
+        events.on('dino-health-changed',this.handleHealthPlayerChanged ,this);
+    }
+
+    handleHealthPlayerChanged(value: number) {
+        this.setHealthBar(value);
     }
 
     getHealth() {
@@ -65,6 +76,8 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
 
     destroy(fromScene?: boolean): void {
         this.move.destroy();
+        this.graphics?.destroy();
+        this.DinoName.destroy();
 
         super.destroy(fromScene);
     }
@@ -79,6 +92,13 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time: number, delta: number): void {
         super.preUpdate(time, delta);
+
+        if(!this.graphics) {
+            return
+        }
+
+        this.graphics.x = this.x - 13
+        this.graphics.y = this.y - 25
 
         this.setTarget;
 
@@ -148,6 +168,19 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
             }
         } else {
             return
+        }
+    }
+
+    private setHealthBar(value: number) {
+        const width = 25;
+        const percent = Phaser.Math.Clamp(value, 0, 100) / ( width * 4 );
+
+        this.graphics.fillStyle(0x808080);
+        this.graphics.fillRect(0, 0, width, 4);
+
+        if (percent > 0) {
+            this.graphics.fillStyle(0x00ff00)
+            this.graphics.fillRect(0, 0, percent * width, 4);
         }
     }
 }
