@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { playerReset } from "../../utils/playerReset";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -20,10 +21,23 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     private healthState = HealthState.IDLE;
     private damageTime = 0;
     private _health = 100;
+    private _experience = 0;
     private fireballs?: Phaser.Physics.Arcade.Group 
 
     get health() {
         return this._health;
+    }
+
+    get getExperience() {
+        return this._experience;
+    }
+
+    set setExperience(value: number) {
+        this._experience = value;
+    }
+
+    set RespawnHealth(value: number) {
+        this._health = value;
     }
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
@@ -39,6 +53,10 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
     }
 
     damageHandler(dir: Phaser.Math.Vector2) {
+        if(this._health > 0) {
+            console.log(this._health);
+        }
+
         if (this._health <= 0) {
             return
         }
@@ -52,7 +70,11 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
         if(this._health <= 0) {
             this.healthState = HealthState.DEAD;
             this.anims.play('fauna-die', true);
-            this.setVelocity(0, 0)
+            this.setVelocity(0, 0);
+            this.scene.time.delayedCall(15000, () => {
+                this.healthState = HealthState.IDLE;
+                playerReset(this);
+            })
         } else {
             this.setVelocity(dir.x, dir.y);
             
@@ -97,6 +119,9 @@ export default class Fauna extends Phaser.Physics.Arcade.Sprite {
 
         fireball.setActive(true);
         fireball.setVisible(true);
+        
+        fireball.x += vector.x * 16;
+        fireball.y += vector.y * 16;
     }
 
     protected preUpdate(_time: number, _delta: number): void {
