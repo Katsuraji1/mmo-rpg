@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import { Text } from '../utils/text';
 import Fauna from '../character/fauna/fauna';
-import { newEvent as events } from "../events/eventCenter";
 
 export enum Direction {
     UP,
@@ -54,11 +53,9 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
 
         this.graphics = scene.add.graphics();
         this.setHealthBar(100);
-
-        events.on('dino-health-changed',this.handleHealthPlayerChanged ,this);
     }
 
-    handleHealthPlayerChanged(value: number) {
+    handleHealthDinoChanged(value: number) {
         this.setHealthBar(value);
     }
 
@@ -156,6 +153,7 @@ export default class Dino extends Phaser.Physics.Arcade.Sprite {
         if (!this.target) {
             return
         } 
+        this.handleHealthDinoChanged(this.getHealth());
 
 
         this.RANGE = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)

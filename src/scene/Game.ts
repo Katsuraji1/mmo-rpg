@@ -25,6 +25,7 @@ export default class Game extends Phaser.Scene {
 	private CollidesBetweenPlayerAndMob?: Phaser.Physics.Arcade.Collider;
 	private fireballs!: Phaser.Physics.Arcade.Group;
 	private mobHealth!: number;
+	private playerExperience!: number;
 
 	constructor() {
 		super('game')
@@ -72,7 +73,7 @@ export default class Game extends Phaser.Scene {
 
 
 		this.fireballs = this.physics.add.group( {
-			classType: Phaser.Physics.Arcade.Image
+			classType: Phaser.Physics.Arcade.Image,
 		} )
 
 		this.fauna = this.add.fauna(300, 300, 'fauna');
@@ -91,7 +92,12 @@ export default class Game extends Phaser.Scene {
 			}
 		} )
 
-		this.dinos.get(359, 359, 'dino')
+		const dinosLayer = map.getObjectLayer('dinos');
+		dinosLayer.objects.forEach((dinoObj) => {
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			this.dinos.get(dinoObj.x! + dinoObj.width! * 0.5, dinoObj.y! - dinoObj.height! * 0.5 , 'dino')
+		})
+
 		this.physics.add.collider(this.fauna, wallsLayer);
 		this.physics.add.collider(this.dinos, wallsLayer);
 		this.physics.add.collider(this.fireballs, wallsLayer, this.FireballWallsCollisionHandler, undefined,this);
@@ -114,8 +120,10 @@ private MobFireballCollisionHandler = (_obj1: Phaser.GameObjects.GameObject, _ob
 	this.mobHealth = dino.getHealth();
 	this.mobHealth -= 50;
 	dino.setHealth(this.mobHealth);
-	events.emit('dino-health-changed', this.mobHealth)
+	this.playerExperience = this.fauna.getExperience;
 	if(this.mobHealth <= 0) {
+		this.playerExperience += Phaser.Math.Between(0, 100);
+		this.fauna.setExperience = this.playerExperience;
 		this.dinos.killAndHide(_obj2);
 		_obj2.destroy();
 	}
@@ -141,7 +149,14 @@ private PlayerAndModCollision = (_obj1: Phaser.GameObjects.GameObject, _obj2: Ph
 	events.emit('player-health-changed', this.fauna.health)
 
 	if(this.fauna.health <= 0) {
-		this.CollidesBetweenPlayerAndMob?.destroy()
+		try {
+			this.CollidesBetweenPlayerAndMob?.destroy()
+		} catch(err) {
+			console.log(err);
+		}
+		this.time.delayedCall(15000, () => {
+			this.CollidesBetweenPlayerAndMob = this.physics.add.collider(this.dinos, this.fauna,this.PlayerAndModCollision, undefined, this)
+		})
 	}
 }
 
