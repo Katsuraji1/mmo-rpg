@@ -76,7 +76,7 @@ export default class Game extends Phaser.Scene {
 			classType: Phaser.Physics.Arcade.Image,
 		} )
 
-		this.fauna = this.add.fauna(300, 300, 'fauna');
+		this.fauna = this.add.fauna(800, 800, 'fauna');
 		this.fauna.setFireballs(this.fireballs);
 
 		this.name = new Text(this, this.fauna.x - this.fauna.width / 2, this.fauna.y - this.fauna.height, 'Katsuraji');
